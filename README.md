@@ -31,6 +31,8 @@ conda install -c anaconda git
 
 #Clone steve Mussmann's GitHub repository
 git clone https://github.com/stevemussmann/admixturePipeline
+
+wget 
 ```
 
 
@@ -59,7 +61,12 @@ Sample_6  Pop_C
 ## STEP 3: Conducting LD-filtering of VCF file
 The authors of ADMIXTURE recommend avoiding SNPs with high linkage disequilibrium (LD), so we will use PLINK to remove SNPs with LD greater than 0.8 within 1Mb windows. LD filtering is conducting as follows:
 
+```bash
+#Specify VCF file name
+VCF_File=NAME.vcf
 
+
+```
 
 
 
