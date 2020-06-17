@@ -10,11 +10,17 @@ This Github repository provides scripts and a step-by-step guide for running ADM
 ADMIXTURE normally requires input in binary PLINK (.bed), ordinary PLINK (.ped), or EIGENSTRAT (.geno) formatted files. However, in this guide we make use of Steve Mussmann's Admixure pipeline (https://github.com/stevemussmann/admixturePipeline) which accepts a single VCF as the input format. This GitHub repository also provide necessary commands to summarise Admixure output across runs, and R code to plot results.
 
 ## STEP 1: Installing dependencies
+The following programs (plus Steve Mussmann's Admixture pipeline) are required to perform analyses:
+1. 
+
+In command line run the following commands to install dependencies:
+(Note: requires Miniconda to be installed on your computer - see [here](https://docs.conda.io/projects/continuumio-conda/en/latest/user-guide/install/macos.html)
+
+```bash
+conda install -c bioconda admixture
 
 
-
-
-
+```
 
 
 
