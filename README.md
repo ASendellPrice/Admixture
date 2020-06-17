@@ -36,7 +36,7 @@ wget
 ```
 
 
-## STEP 2: Checking input VCF and creating PopMap file
+## STEP 2: Checking input VCF
 Steve Mussmann's Admixture pipeline requires a **single** VCF file containing all indiviudals. If you have seperate VCF files for individuals you will need to merge these. VCF file merging can be conducted with bcftools like so:
 
 ```bash
@@ -47,16 +47,6 @@ bcftools merge \
 
 **Note:** bcftools merge presumes that samples within each VCF file have unique names. If they don't bcftools will exit with an error message, unless the option "--force-samples" is given.
 
-Admixure pipeline requires a file which specifes which population a given sample belongs to. This file, which we will call PopMap.txt, is a simple tab-delimited file with two columns. Column 1 specifies sample name in VCF file and column 2 specifies the samples population. Here is an example:
-
-```bash
-Sample_1  Pop_A
-Sample_2  Pop_A
-Sample_3  Pop_B
-Sample_4  Pop_B
-Sample_5  Pop_B
-Sample_6  Pop_C
-```
 
 ## STEP 3: Filter VCF file so that only biallelic SNPs present in all individuals are retained. 
 As Admixture only considers biallelic SNPs (sites where there is only one minor allele) we will filter the VCF file to remove non-variant sites and sites with more 1 minor allele. As data missingness can cause problems we will also remove SNPs not genotyped in all individuals.
@@ -73,7 +63,7 @@ vcftools --vcf Merged.vcf \
 mv out.recode.vcf Merged_BiallelicOnly_NoMissing.vcf
 ```
 
-## STEP 3: Conducting LD-filtering of VCF file
+## STEP 4: Conducting LD-filtering of VCF file
 The authors of ADMIXTURE recommend avoiding SNPs with high linkage disequilibrium (LD), so we will use PLINK to identify SNPs with LD > 0.8 within 1Mb windows and remove these using vcftools. LD filtering is conducting as follows:
 
 ```bash
@@ -109,6 +99,45 @@ mv out.recode.vcf ${VCF_File_prefix}_LD_Pruned.vcf
 ```
 
 
+## STEP 5: Running Admixture on LD-filtered VCF file.
+Steve Mussmann's Admixure pipeline requires a file specifying which population a given sample belongs to. This file, which we will call PopMap.txt, is a simple tab-delimited file with two columns. Column 1 specifies sample name in VCF file and column 2 specifies the samples population. Here is an example:
 
+```bash
+Sample_1  Pop_A
+Sample_2  Pop_A
+Sample_3  Pop_B
+Sample_4  Pop_B
+Sample_5  Pop_B
+Sample_6  Pop_C
+```
 
+Thankfully the Admixture Pipeline has hugely simplified running ADMIXTURE. You can run ADMIXTURE using the commands below:
 
+```bash
+
+#Set minimum and maximum values of K (number of possible populations to be tested):
+Min_K=1
+Max_K=5 #<-- change to something meaningful for your samples, this could be max number of location, presumed populations etc.
+
+#Specify name of vcf file:
+VCF=Merged_BiallelicOnly_NoMissing_LD_Pruned.vcf
+
+#Specify number of independent runs required :
+RUNS=100
+
+#Specify the cross-validation number for the admixture program (default = 20)
+CROSSVAL=20
+
+#Specify the number of processors. Currently the only multithreaded program is Admixture.
+PROCESSORS=1
+
+ulimit -n 3000
+python admixturePipeline/admixturePipeline.py \
+-v $VCF \
+-m PopMap.txt \
+-k $Min_K \
+-K $Max_K \
+-n $PROCESSORS \
+-R $RUNS \
+-c $CROSSVAL
+```
