@@ -141,3 +141,8 @@ python admixturePipeline/admixturePipeline.py \
 -R $RUNS \
 -c $CROSSVAL
 ```
+
+Admixture will now start running. Depending on the number of loci/samples included in VCF and the number of independent runs selected it may take several hours to run -- bioinformatics is predominantly patience.
+
+
+
