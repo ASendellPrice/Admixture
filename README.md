@@ -14,8 +14,7 @@ The following programs (plus Steve Mussmann's Admixture pipeline) are required t
 1. admixture
 2. plink
 3. vcftools
-4. bgzip
-5. Tabix
+4. Tabix
 
 In command line run the following commands to install dependencies:
 (Note: requires Miniconda to be installed on your computer - see [here](https://docs.conda.io/projects/continuumio-conda/en/latest/user-guide/install/macos.html)
@@ -32,6 +31,9 @@ conda install -c anaconda git
 git clone https://github.com/stevemussmann/admixturePipeline
 ```
 
+
+## STEP 2: Checking input VCF and creating PopMap file
+Steve Mussmann's Admixture pipeline requires a **single** VCF file containing all indiviudals. If you have seperate VCF files for individuals you will need to merge these. VCF file merging can be conducted with 
 
 
 
