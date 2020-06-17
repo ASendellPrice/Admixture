@@ -59,7 +59,7 @@ Sample_6  Pop_C
 ```
 
 ## STEP 3: Filter VCF file so that only biallelic SNPs present in all individuals are retained. 
-Admixture only considers biallelic SNPs (sites where there is only one alternative allele). As data missingness can cause problems we will also remove SNPs not genotyped in all individuals. 
+As Admixture only considers biallelic SNPs (sites where there is only one minor allele) we will filter the VCF file to remove non-variant sites and sites with more 1 minor allele. As data missingness can cause problems we will also remove SNPs not genotyped in all individuals.
 
 ```bash
 #Use vcftools to filter vcf file
@@ -95,7 +95,17 @@ plink --bfile ${VCF_File_prefix}_annot \
 --out ${VCF_File_prefix}_annot \
 --allow-extra-chr
 
+#This will output a list of SNPs to retain in the file with extension ".prune.in"
+#Use the following command to find out how many SNPs will be retained after filtering:
+wc -l *.prune.in
 
+#Use ".prune.in" file to filter VCF retaining SNPs with LD <0.8:
+vcftools --vcf ${VCF_File_prefix}_annot.vcf \
+--snps ${VCF_File_prefix}_annot.prune.in \
+--recode
+
+#Rename outputted vcf file something sensible
+mv out.recode.vcf ${VCF_File_prefix}_LD_Pruned.vcf
 ```
 
 
