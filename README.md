@@ -35,23 +35,24 @@ git clone https://github.com/stevemussmann/admixturePipeline
 
 
 ## STEP 2: Checking input VCF and creating PopMap file
-Steve Mussmann's Admixture pipeline requires a **single** VCF file containing all indiviudals. If you have seperate VCF files for individuals you will need to merge these. VCF file merging can be conducted with 
-
-
-
-
+Steve Mussmann's Admixture pipeline requires a **single** VCF file containing all indiviudals. If you have seperate VCF files for individuals you will need to merge these. VCF file merging can be conducted with bcftools like so:
 
 ```bash
-#!/bin/bash
-#SBATCH --nodes=1
-#SBATCH --time=24:00:00
-#SBATCH --array=1-187:1
-#SBATCH --job-name=snp-array
-#SBATCH --output=snp-array.log
-#SBATCH --error=snp-array.error
-#SBATCH --mail-type=FAIL
-#SBATCH --mail-user=ashley.sendell-price@zoo.ox.ac.uk
-
-module load java/1.8.0
-
+bcftools merge \
+*.vcf \
+--output Merged.vcf
 ```
+
+**Note:** bcftools merge presumes that samples within each VCF file have unique names. If they don't bcftools will exit with an error message, unless the option "--force-samples" is given.
+
+Admixure pipeline requires a file which specifes which population a given sample belongs to. This file, which we will call PopMap.txt, is a simple tab-delimited file with two columns. Column 1 specifies sample name in VCF file and column 2 specifies the samples population. Here is an example:
+
+```bash
+Sample_1  Pop_A
+Sample_2  Pop_A
+Sample_3  Pop_B
+Sample_4  Pop_B
+Sample_5  Pop_B
+Sample_6  Pop_C
+```
+
