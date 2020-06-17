@@ -56,3 +56,12 @@ Sample_5  Pop_B
 Sample_6  Pop_C
 ```
 
+## STEP 3: Conducting LD-filtering of VCF file
+The authors of ADMIXTURE recommend avoiding SNPs with high linkage disequilibrium (LD), so we will use PLINK to remove SNPs with LD greater than 0.8 within 1Mb windows. LD filtering is conducting as follows:
+
+
+
+
+
+
+
