@@ -74,7 +74,7 @@ mv out.recode.vcf Merged_BiallelicOnly_NoMissing.vcf
 ```
 
 ## STEP 3: Conducting LD-filtering of VCF file
-The authors of ADMIXTURE recommend avoiding SNPs with high linkage disequilibrium (LD), so we will use PLINK to remove SNPs with LD greater than 0.8 within 1Mb windows. LD filtering is conducting as follows:
+The authors of ADMIXTURE recommend avoiding SNPs with high linkage disequilibrium (LD), so we will use PLINK to identify SNPs with LD > 0.8 within 1Mb windows and remove these using vcftools. LD filtering is conducting as follows:
 
 ```bash
 #Specify VCF file name
