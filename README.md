@@ -58,12 +58,42 @@ Sample_5  Pop_B
 Sample_6  Pop_C
 ```
 
+## STEP 3: Filter VCF file so that only biallelic SNPs present in all individuals are retained. 
+Admixture only considers biallelic SNPs (sites where there is only one alternative allele). As data missingness can cause problems we will also remove SNPs not genotyped in all individuals. 
+
+```bash
+#Use vcftools to filter vcf file
+vcftools --vcf Merged.vcf \
+--min-alleles 2 \
+--max-alleles 2 \
+--max-missing 1 \
+--recode
+
+#Rename outputted vcf file something sensible
+mv out.recode.vcf Merged_BiallelicOnly_NoMissing.vcf
+```
+
 ## STEP 3: Conducting LD-filtering of VCF file
 The authors of ADMIXTURE recommend avoiding SNPs with high linkage disequilibrium (LD), so we will use PLINK to remove SNPs with LD greater than 0.8 within 1Mb windows. LD filtering is conducting as follows:
 
 ```bash
 #Specify VCF file name
-VCF_File=NAME.vcf
+VCF_File_prefix=Merged_BiallelicOnly_NoMissing #minus extension ".vcf"
+
+#Annotate vcf file
+#This in effect gives each SNP an identifier (Scaffold_Position) which can be later used to select loci during filtering step.
+bash ./plink_pruning_prep.sh ${VCF_File_prefix}.vcf
+
+#Convert to plink input files (bim, bed, fam)
+plink --vcf ${VCF_File_prefix}_annot.vcf \
+--allow-extra-chr \
+--out ${VCF_File_prefix}_annot
+
+#Filter based on LD (using 1Mb window, a 1SNP step, and an r2 threshold of 0.8 - remove loci with very high linkage)
+plink --bfile ${VCF_File_prefix}_annot \
+--indep-pairwise 1000 kb 1 0.8 \
+--out ${VCF_File_prefix}_annot \
+--allow-extra-chr
 
 
 ```
