@@ -15,9 +15,10 @@ The following programs (plus Steve Mussmann's Admixture pipeline) are required t
 2. plink
 3. vcftools
 4. Tabix
+5. bcftools
 
 In command line run the following commands to install dependencies:
-(Note: requires Miniconda to be installed on your computer - see [here](https://docs.conda.io/projects/continuumio-conda/en/latest/user-guide/install/macos.html)
+(Note: requires Miniconda to be installed on your computer - see [here](https://docs.conda.io/projects/continuumio-conda/en/latest/user-guide/install/macos.html))
 
 ```bash
 #install programmes using Miniconda
@@ -25,6 +26,7 @@ conda install -c bioconda admixture
 conda install -c bioconda plink
 conda install -c bioconda vcftools
 conda install -c bioconda tabix
+conda install -c bioconda bcftools
 conda install -c anaconda git
 
 #Clone steve Mussmann's GitHub repository
