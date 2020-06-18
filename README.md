@@ -122,7 +122,7 @@ Max_K=5 #<-- change to something meaningful for your samples, this could be max 
 #Specify name of vcf file:
 VCF=Merged_BiallelicOnly_NoMissing_LD_Pruned.vcf
 
-#Specify number of independent runs required :
+#Specify number of independent runs required:
 RUNS=100
 
 #Specify the cross-validation number for the admixture program (default = 20)
