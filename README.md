@@ -156,5 +156,8 @@ To determine the best value of K we will extract the cross-validation error from
 ```bash
 grep -h CV *.stdout > CV_Error_All_Runs.txt
 ```
+Now need to open CV_Error_All_Runs.txt in Excel and calculate mean cross-validation (CV) error for each value of K. Based on this which value of K has the lowest CV error for your data? 
 
-
+```bash
+BEST_K=X #<-- Insert best K value here
+```
