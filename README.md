@@ -172,7 +172,7 @@ mv ../*.${BEST_K}_*.stdout
 ```
 
 ## STEP 7: Summarising output across runs
-As we have conducted multiple runs of each value of K we will need to sumamrise runs for the best K value prior to plotting output. To do this we will use a programme called [CLUMPP](https://rosenberglab.stanford.edu/clumpp.html) that deals with label switching between runs. 
+As we have conducted multiple runs of each value of K we will need to sumamrise runs for the best K value prior to plotting output. To do this we will use a programme called [CLUMPP](https://rosenberglab.stanford.edu/clumpp.html) that deals with label switching between runs. Download the programme from [here](https://rosenberglab.stanford.edu/clumppDownload.html) and copy the executable file "CLUMPP" to the "Best_K" directory.
 
 Use the R package "Pophelper" to create input for CLUMPP:
 
@@ -188,12 +188,45 @@ Then in R ...
 library(pophelper)
 
 #Create a list of "Q" files
-#Note: $ at the end means that this is end of string. As "." is special character in regular expressions we need to escape it using "\\."
+#Note: $ at the end means that this is end of string. As "." is a special character in regular expressions we need to escape it using "\\."
 Q.files <- list.files(pattern = "\\.Q$") 
 
-#Create input for CLUMPP
+#Create input for CLUMPP - this will output a new direcory with the name "pop_KX" where "X" is the K value being summarised.
 clumppExport(readQ(Q.files))
 
 #Exit R
 quit()
+```
+
+Back in command line, run CLUMPP ...
+```bash
+#move into the "pop_KX" directory
+cd pop_KX
+
+#Run CLUMPP with this simple command
+./CLUMPP paramfile
+```
+
+This will generate several files. We are interested in pop_KX-combined-merged.txt, which contains the average admixuture proportions for each sample. To get this into a the correct format for visualising  we will use the cat and awk commands to create a ".Q" file. As the commands vary depending on the number of populations tested (aka the K value) I provide various examples below.
+
+```bash
+#K = 2 example:
+cat pop_K2-combined-merged.txt | awk '{print $2 " " $3}' \
+> pop_K2-combined-merged.Q
+
+#K = 3 example:
+cat pop_K3-combined-merged.txt | awk '{print $2 " " $3 " " $4}' \
+> pop_K3-combined-merged.Q
+
+#K = 4 example:
+cat pop_K4-combined-merged.txt | awk '{print $2 " " $3 " " $4 " " $5}' \
+> pop_K4-combined-merged.Q
+
+#K = 5 example:
+cat pop_K5-combined-merged.txt | awk '{print $2 " " $3 " " $4 " " $5 " " $6}' \
+> pop_K5-combined-merged.Q
+
+#K = 6 example:
+cat pop_K6-combined-merged.txt | awk '{print $2 " " $3 " " $4 " " $5 " " $6 " " $7}' \
+> pop_K6-combined-merged.Q
 ```
