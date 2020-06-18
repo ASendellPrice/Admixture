@@ -17,7 +17,7 @@ The following programs (plus Steve Mussmann's Admixture pipeline) are required t
 4. Tabix
 5. bcftools
 
-In command line run the following commands to install dependencies:
+In the command line run the following commands to install dependencies:
 (Note: requires Miniconda to be installed on your computer - see [here](https://docs.conda.io/projects/continuumio-conda/en/latest/user-guide/install/macos.html))
 
 ```bash
@@ -34,7 +34,7 @@ git clone https://github.com/stevemussmann/admixturePipeline
 
 wget 
 ```
-
+Make a copy of the "plink_pruning_prep.sh" file included with github repository (here)[https://github.com/ASendellPrice/Admixture/blob/master/plink_pruning_prep.sh].
 
 ## STEP 2: Checking input VCF
 Steve Mussmann's Admixture pipeline requires a **single** VCF file containing all indiviudals. If you have seperate VCF files for individuals you will need to merge these. VCF file merging can be conducted with bcftools like so:
