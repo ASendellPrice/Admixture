@@ -174,4 +174,26 @@ mv ../*.${BEST_K}_*.stdout
 ## STEP 7: Summarising output across runs
 As we have conducted multiple runs of each value of K we will need to sumamrise runs for the best K value prior to plotting output. To do this we will use a programme called [CLUMPP](https://rosenberglab.stanford.edu/clumpp.html) that deals with label switching between runs. 
 
+Use the R package "Pophelper" to create input for CLUMPP:
 
+First open R on command line ...
+
+```bash
+R
+```
+
+Then in R ...
+```R
+#Load pophelper package - if not installed use command: install.packages("pophelper")
+library(pophelper)
+
+#Create a list of "Q" files
+#Note: $ at the end means that this is end of string. As "." is special character in regular expressions we need to escape it using "\\."
+Q.files <- list.files(pattern = "\\.Q$") 
+
+#Create input for CLUMPP
+clumppExport(readQ(Q.files))
+
+#Exit R
+quit()
+```
