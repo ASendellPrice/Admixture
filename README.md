@@ -142,7 +142,19 @@ python admixturePipeline/admixturePipeline.py \
 -c $CROSSVAL
 ```
 
-Admixture will now start running. Depending on the number of loci/samples included in VCF and the number of independent runs selected it may take several hours to run -- bioinformatics is predominantly patience.
+ADMIXTURE will now start running. Depending on the number of loci/samples included in VCF and the number of independent runs selected it may take several hours to run -- bioinformatics is predominantly patience.
 
+When complete ADMIXTURE will have outputted many files. For each run and each value of K ADMIXTURE will output the following:
+1. .Q = ancestry fractions for each indivual
+2. .P = the allele frequencies of the inferred ancestral populations
+3. .stdout = output from cross-validation error estimation.
+
+## STEP 6: Determining the best value of K
+
+To determine the best value of K we will extract the cross-validation error from each run of each value of K and pipe that to a file we will call CV_Error_All_Runs.txt
+
+```bash
+grep -h CV *.stdout > CV_Error_All_Runs.txt
+```
 
 
