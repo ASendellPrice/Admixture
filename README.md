@@ -230,3 +230,4 @@ cat pop_K5-combined-merged.txt | awk '{print $2 " " $3 " " $4 " " $5 " " $6}' \
 cat pop_K6-combined-merged.txt | awk '{print $2 " " $3 " " $4 " " $5 " " $6 " " $7}' \
 > pop_K6-combined-merged.Q
 ```
+Now we have a working .Q file which you can use for plotting with Pophelper in R (see useful manual [here](http://www.royfrancis.com/pophelper/articles/index.html) or using an online version that is simple to use [here](http://pophelper.com/). 
