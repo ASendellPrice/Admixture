@@ -161,3 +161,17 @@ Now need to open CV_Error_All_Runs.txt in Excel and calculate mean cross-validat
 ```bash
 BEST_K=X #<-- Insert best K value here
 ```
+Create a new directory where we will move output for best K, switch to that directory and move output
+
+```bash
+mkdir Best_K
+cd Best_K
+mv ../*.${BEST_K}_*.Q
+mv ../*.${BEST_K}_*.P
+mv ../*.${BEST_K}_*.stdout
+```
+
+## STEP 7: Summarising output across runs
+As we have conducted multiple runs of each value of K we will need to sumamrise runs for the best K value prior to plotting output. To do this we will use a programme called [CLUMPP](https://rosenberglab.stanford.edu/clumpp.html) that deals with label switching between runs. 
+
+
