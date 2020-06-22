@@ -166,9 +166,9 @@ Create a new directory where we will move output for best K, switch to that dire
 ```bash
 mkdir Best_K
 cd Best_K
-mv ../*.${BEST_K}_*.Q
-mv ../*.${BEST_K}_*.P
-mv ../*.${BEST_K}_*.stdout
+mv ../*.${BEST_K}_*.Q ./
+mv ../*.${BEST_K}_*.P ./
+mv ../*.${BEST_K}_*.stdout ./
 ```
 
 ## STEP 7: Summarising output across runs
